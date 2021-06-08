@@ -29,5 +29,21 @@
  font-weight: var(--fw-regular);
 }
 
+.active {
+ text-decoration: none;
+}
+
+.completed {
+ text-decoration: line-through;
+}
+
+.todo-sort-btn {
+ color: black;
+}
+
+.todo-sort-btn.selected {
+ color: var(--blue-bright);
+}
+
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
