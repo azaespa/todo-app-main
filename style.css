@@ -23,6 +23,10 @@
  --fw-regular: 400;
  --fw-bold: 700;
  --ff: 'Josefin Sans', sans-serif;
+
+ font-family: var(--ff);
+ font-size: var(--fs);
+ font-weight: var(--fw-regular);
 }
 
 .attribution { font-size: 11px; text-align: center; }

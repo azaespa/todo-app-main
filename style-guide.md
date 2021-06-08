@@ -44,3 +44,15 @@ The designs were created to the following widths:
 
 - Family: [Josefin Sans](https://fonts.google.com/specimen/Josefin+Sans)
 - Weights: 400, 700
+
+-main
+--header
+---app-name
+---theme-toggle
+--form.todo-input-form
+---input.todo-radio.disabled
+---input.todo-input
+--ul.todo-list
+---li.todo
+----input.todo-radio
+----span.todo-detail
