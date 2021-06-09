@@ -33,7 +33,7 @@
  text-decoration: none;
 }
 
-.completed {
+.completed-todo {
  text-decoration: line-through;
 }
 

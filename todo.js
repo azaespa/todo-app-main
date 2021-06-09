@@ -19,8 +19,8 @@ let todoItemsCount = 0;
 let lastTodoSortBtnSelected = "all-list";
 
 function sortTodoList(SORT_BTN_ID){
- const TODOS = todoList.querySelectorAll(".todo");
- TODOS.forEach(todo => {
+ const TODO_LIST = todoList.querySelectorAll(".todo");
+ TODO_LIST.forEach(todo => {
   switch(SORT_BTN_ID){
    case "completed-list":
     if(todo.classList.contains(CN_COMPLETED_TODO)){
