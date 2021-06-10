@@ -18,7 +18,6 @@ let todoItemsCount = 0;
 let lastTodoSortBtnSelected = "all-list";
 
 function handleClearCompleted() {
-  console.log(todoList.querySelectorAll(".completed-todo"));
   const COMPLETED_TODOS = todoList.querySelectorAll(".completed-todo");
   COMPLETED_TODOS.forEach(todo => {
     todoList.removeChild(todo);
@@ -104,6 +103,12 @@ function uncheckThisRadio(event) {
  
 }
 
+function handleClickDeleteTodo(event) {
+  const PARENT_LI = event.target.closest(".todo");
+  todoList.removeChild(PARENT_LI);
+  decreaseTodoItemsCount();
+}
+
 function handleChangeTodoRadio(event) {
  const THIS_RADIO = event.target;
  const THIS_TODO = THIS_RADIO.closest(".todo");
@@ -118,6 +123,7 @@ function handleChangeTodoRadio(event) {
 }
 
 function addTextToTodoList(INPUT_TEXT_VALUE) {
+  const todoDelete = document.createElement("button");
   const todoDetail = document.createElement("span");
   const todoRadio = document.createElement("input");
   const todoId = new Date().getTime();
@@ -130,13 +136,15 @@ function addTextToTodoList(INPUT_TEXT_VALUE) {
   todo.classList.add(CN_TODO, CN_ACTIVE_TODO);
   todo.id = todoId;
 
+  todoDelete.innerHTML = "<img src=images/icon-cross.svg>"
   todoDetail.innerText = INPUT_TEXT_VALUE;
   todo.append(todoRadio);
   todo.append(todoDetail);
+  todo.append(todoDelete);
   todoList.append(todo);
 
   todoRadio.addEventListener("change", handleChangeTodoRadio);
-
+  todoDelete.addEventListener("click", handleClickDeleteTodo);
 }
 
 function clearTodoInputText() {
