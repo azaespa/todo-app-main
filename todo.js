@@ -5,9 +5,8 @@ const todoList = document.querySelector(".todo-list");
 
 const todoNav = document.querySelector(".todo-nav"),
  todoItemsCounter = todoNav.querySelector(".todo-items-counter"),
- todoSortBtnAll = todoNav.querySelector("#all-list"),
- todoSortBtnActive = todoNav.querySelector("#active-list"),
- todoSortBtnCompleted = todoNav.querySelector("#completed-list");
+ todoSortButtons = todoNav.querySelectorAll(".todo-sort-btn"),
+ clearCompletedTodoBtn = todoNav.querySelector(".todo-clear-btn");
 
 const CN_TODO_DETAIL = "todo-detail";
 const CN_TODO_RADIO = "todo-radio";
@@ -17,6 +16,14 @@ const CN_COMPLETED_TODO = "completed-todo"
 
 let todoItemsCount = 0;
 let lastTodoSortBtnSelected = "all-list";
+
+function handleClearCompleted() {
+  console.log(todoList.querySelectorAll(".completed-todo"));
+  const COMPLETED_TODOS = todoList.querySelectorAll(".completed-todo");
+  COMPLETED_TODOS.forEach(todo => {
+    todoList.removeChild(todo);
+  });
+}
 
 function sortTodoList(SORT_BTN_ID){
  const TODO_LIST = todoList.querySelectorAll(".todo");
@@ -50,19 +57,18 @@ function styleSortBtn(THIS_SORT_BTN){
   THIS_SORT_BTN.classList.add("selected");
   lastTodoSortBtnSelected = THIS_SORT_BTN.id;
  }
- console.log(THIS_SORT_BTN.id)
 }
 
 function handleSortBtn(event){
  const THIS_SORT_BTN = event.target;
- sortTodoList(THIS_SORT_BTN.id)
+ sortTodoList(THIS_SORT_BTN.id);
  styleSortBtn(THIS_SORT_BTN);
 }
 
-function sortTodoBtnAddEventListener() {
- todoSortBtnAll.addEventListener("click", handleSortBtn);
- todoSortBtnActive.addEventListener("click",handleSortBtn);
- todoSortBtnCompleted.addEventListener("click",handleSortBtn);
+function sortTodoButtonsAddEventListener() {
+  todoSortButtons.forEach(todoSortButton => {
+    todoSortButton.addEventListener("click", handleSortBtn);
+  });
 }
 
 function uncheckTodoInputRadio(event){
@@ -157,7 +163,8 @@ function handleSubmitTodo(event) {
 function init() {
   todoInputForm.addEventListener("submit", handleSubmitTodo);
   loadTodoItemsCount();
-  sortTodoBtnAddEventListener();
+  sortTodoButtonsAddEventListener();
+  clearCompletedTodoBtn.addEventListener("click", handleClearCompleted);
 }
 
 init();
