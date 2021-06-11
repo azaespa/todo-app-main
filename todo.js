@@ -11,32 +11,36 @@ const todoNav = document.querySelector(".todo-nav"),
 const CN_TODO_DETAIL = "todo-detail";
 const CN_TODO_RADIO = "todo-radio";
 const CN_TODO = "todo";
+const CN_DROPZONE = "dropzone";
 const CN_ACTIVE_TODO = "active-todo";
-const CN_COMPLETED_TODO = "completed-todo"
+const CN_COMPLETED_TODO = "completed-todo";
 
 let todoItemsCount = 0;
 let lastTodoSortBtnSelected = "all-list";
+let draggedTodoDiv, draggedTodo;
+let targetTodoDiv, targetTodo;
 
 function handleClearCompleted() {
   const COMPLETED_TODOS = todoList.querySelectorAll(".completed-todo");
   COMPLETED_TODOS.forEach(todo => {
-    todoList.removeChild(todo);
+    todoList.removeChild(todo.parentNode);
   });
 }
 
 function sortTodoList(SORT_BTN_ID){
  const TODO_LIST = todoList.querySelectorAll(".todo");
  TODO_LIST.forEach(todo => {
+   const TODO_DIV = todo.querySelector("div");
   switch(SORT_BTN_ID){
    case "completed-list":
-    if(todo.classList.contains(CN_COMPLETED_TODO)){
+    if(TODO_DIV.classList.contains(CN_COMPLETED_TODO)){
      todo.style.display = "block";
     } else {
      todo.style.display = "none";
     }
     break;
    case "active-list":
-    if(todo.classList.contains(CN_ACTIVE_TODO)){
+    if(TODO_DIV.classList.contains(CN_ACTIVE_TODO)){
      todo.style.display = "block";
     } else {
      todo.style.display = "none";
@@ -92,31 +96,32 @@ function increaseTodoItemsCount() {
 
 function uncheckThisRadio(event) {
  const THIS_RADIO = event.target;
- const THIS_TODO = THIS_RADIO.closest(".todo");
+ const THIS_TODO_DIV = THIS_RADIO.closest("div");
  THIS_RADIO.checked = false;
  THIS_RADIO.removeEventListener("click", uncheckThisRadio);
- if(THIS_TODO.classList.contains(CN_COMPLETED_TODO)){
-  THIS_TODO.classList.remove(CN_COMPLETED_TODO);
-  THIS_TODO.classList.add(CN_ACTIVE_TODO);
+ if(THIS_TODO_DIV.classList.contains(CN_COMPLETED_TODO)){
+  THIS_TODO_DIV.classList.remove(CN_COMPLETED_TODO);
+  THIS_TODO_DIV.classList.add(CN_ACTIVE_TODO);
  }
  increaseTodoItemsCount();
  
 }
 
 function handleClickDeleteTodo(event) {
-  const PARENT_LI = event.target.closest(".todo");
-  todoList.removeChild(PARENT_LI);
+  const DELETE_BUTTON = event.target;
+  const TODO = DELETE_BUTTON.closest(".todo");
+  todoList.removeChild(TODO);
   decreaseTodoItemsCount();
 }
 
 function handleChangeTodoRadio(event) {
  const THIS_RADIO = event.target;
- const THIS_TODO = THIS_RADIO.closest(".todo");
+ const THIS_TODO_DIV = THIS_RADIO.closest("div");
  THIS_RADIO.addEventListener("click", uncheckThisRadio);
 
- if(THIS_TODO.classList.contains(CN_ACTIVE_TODO)){
-  THIS_TODO.classList.remove(CN_ACTIVE_TODO);
-  THIS_TODO.classList.add(CN_COMPLETED_TODO);
+ if(THIS_TODO_DIV.classList.contains(CN_ACTIVE_TODO)){
+  THIS_TODO_DIV.classList.remove(CN_ACTIVE_TODO);
+  THIS_TODO_DIV.classList.add(CN_COMPLETED_TODO);
  }
  decreaseTodoItemsCount();
  
@@ -127,24 +132,51 @@ function addTextToTodoList(INPUT_TEXT_VALUE) {
   const todoDetail = document.createElement("span");
   const todoRadio = document.createElement("input");
   const todoId = new Date().getTime();
-  const todo = document.createElement("li");
+  const todo = document.createElement("div");
+  const todoContainer = document.createElement("li")
 
   todoRadio.setAttribute("type", "radio");
 
   todoDetail.classList.add(CN_TODO_DETAIL);
   todoRadio.classList.add(CN_TODO_RADIO);
-  todo.classList.add(CN_TODO, CN_ACTIVE_TODO);
-  todo.id = todoId;
+  todo.classList.add(CN_ACTIVE_TODO);
+  todoContainer.classList.add(CN_TODO,CN_DROPZONE);
+  todoContainer.id = todoId;
 
   todoDelete.innerHTML = "<img src=images/icon-cross.svg>"
   todoDetail.innerText = INPUT_TEXT_VALUE;
   todo.append(todoRadio);
   todo.append(todoDetail);
   todo.append(todoDelete);
-  todoList.append(todo);
+  todo.draggable = true;
+  todoContainer.append(todo);
+  todoList.append(todoContainer);
 
   todoRadio.addEventListener("change", handleChangeTodoRadio);
   todoDelete.addEventListener("click", handleClickDeleteTodo);
+  todo.addEventListener("dragstart", (event) => {
+    draggedTodoDiv = event.target;
+    draggedTodo = draggedTodoDiv.parentNode;
+    console.log(draggedTodo)
+  });
+  todo.addEventListener("dragover", (event) => {
+    event.preventDefault();
+  });
+  todo.addEventListener("dragenter", (event) => {
+    
+  });
+  todo.addEventListener("drop", (event) => {
+    event.preventDefault();
+    const CLOSEST_DIV_FROM_TARGET = event.target.closest("div");
+    const PARENT_OF_CLOSEST_DIV = CLOSEST_DIV_FROM_TARGET.parentNode;
+    targetTodoDiv = CLOSEST_DIV_FROM_TARGET;
+    draggedTodo.append(targetTodoDiv);
+    PARENT_OF_CLOSEST_DIV.append(draggedTodoDiv);
+    console.log(PARENT_OF_CLOSEST_DIV)
+  })
+  //debug sort error
+  
+  // drag div -> drop div#id on dropzone -> get target's closest  div#id -> append dragged div to target -> append stored div to dragged previous container
 }
 
 function clearTodoInputText() {
