@@ -86,7 +86,12 @@ button {
 .todo-list {
  list-style: none;
  padding-left: 0;
- font-size: .5rem;
+}
+
+.todo-detail {
+ font-size: .8rem;
+ width: 30ch;
+ overflow: hidden;
 }
 
 .todo-input-text:focus {
@@ -98,6 +103,10 @@ button {
  display: flex;
  gap: .5rem;
  border-bottom: 1px solid var(--dt-blue-gray-light15);
+
+ display: flex;
+ flex-direction: row;
+ align-items: center;
 }
 
 .todo div button {
