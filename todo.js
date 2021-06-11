@@ -157,7 +157,6 @@ function addTextToTodoList(INPUT_TEXT_VALUE) {
   todo.addEventListener("dragstart", (event) => {
     draggedTodoDiv = event.target;
     draggedTodo = draggedTodoDiv.parentNode;
-    console.log(draggedTodo)
   });
   todo.addEventListener("dragover", (event) => {
     event.preventDefault();
@@ -172,7 +171,6 @@ function addTextToTodoList(INPUT_TEXT_VALUE) {
     targetTodoDiv = CLOSEST_DIV_FROM_TARGET;
     draggedTodo.append(targetTodoDiv);
     PARENT_OF_CLOSEST_DIV.append(draggedTodoDiv);
-    console.log(PARENT_OF_CLOSEST_DIV)
   })
   //debug sort error
   

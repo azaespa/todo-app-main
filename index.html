@@ -13,20 +13,29 @@
 
   <main>
     <header class="todo-app-header">
-      <h1 class="app-name"></h1>
-      <button class="theme-toggle"></button>
+      <h1 class="app-name">TODO</h1>
+      <button class="theme-toggle"><img src="images/icon-sun.svg" alt="icon sun"></button>
     </header>
     <form class="todo-input-form">
       <input type="radio" name="todo-input-radio" id="" class="todo-input-radio disabled" disabled>
-      <input type="text" name="todo-input-text" id="" class="todo-input-text">
+      <input type="text" name="todo-input-text" placeholder="Write Todo.." class="todo-input-text">
     </form>
-    <ul class="todo-list"></ul>
-    <div class="todo-nav">
-      <p class="todo-items-counter"></p>
+    <div class="todo-list-container">
+      <ul class="todo-list"></ul>
+      <div class="todo-nav">
+        <p class="todo-items-counter"></p>
+        <div class="todo-nav-desktop">
+          <button class="todo-sort-btn selected" id="all-list">All</button>
+        <button class="todo-sort-btn" id="active-list">Active</button>
+        <button class="todo-sort-btn" id="completed-list">Completed</button>
+        </div>
+        <button class="todo-clear-btn">Clear Completed</button>
+      </div>
+    </div>
+    <div class="todo-nav-mobile">
       <button class="todo-sort-btn selected" id="all-list">All</button>
       <button class="todo-sort-btn" id="active-list">Active</button>
       <button class="todo-sort-btn" id="completed-list">Completed</button>
-      <button class="todo-clear-btn">Clear Completed</button>
     </div>
   </main>
 <!-- 

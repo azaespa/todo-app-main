@@ -14,6 +14,7 @@
  --dt-blue-very-dark: hsl(235, 21%, 11%);
  --dt-blue-desaturated-very-dark: hsl(235, 24%, 19%);
  --dt-blue-gray-light: hsl(234, 39%, 85%);
+ --dt-blue-gray-light15: hsl(234, 39%, 85%, 15%);
  --dt-blue-gray-light-hover: hsl(236, 33%, 92%);
  --dt-blue-gray-dark: hsl(234, 11%, 52%);
  --dt-blue-gray-medium-dark: hsl(233, 14%, 35%);
@@ -29,6 +30,111 @@
  font-weight: var(--fw-regular);
 }
 
+body {
+ box-sizing: border-box;
+ margin: 0;
+ background-color: var(--dt-blue-very-dark);
+ color: var(--dt-blue-gray-light);
+
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+
+}
+
+main {
+ width: 90%;
+}
+
+.todo-app-header {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+}
+
+.app-name {
+ color: white;
+ font-size: 1.11rem;
+ letter-spacing: 0.61rem;
+}
+
+button {
+ cursor: pointer;
+ background-color: transparent;
+ border: none;
+}
+
+.theme-toggle {
+ margin-left: auto;
+}
+
+.todo-input-form,
+.todo-list-container {
+ background-color: var(--dt-blue-desaturated-very-dark);
+}
+
+.todo-input-text {
+ font-family: inherit;
+ font-size: inherit;
+ color: inherit;
+ background-color: transparent;
+ border: none;
+ caret-color: var(--blue-bright);
+}
+
+.todo-list {
+ list-style: none;
+ padding-left: 0;
+ font-size: .5rem;
+}
+
+.todo-input-text:focus {
+ outline: none;
+}
+
+.todo div {
+ width: 100%;
+ display: flex;
+ gap: .5rem;
+ border-bottom: 1px solid var(--dt-blue-gray-light15);
+}
+
+.todo div button {
+ margin-left: auto;
+}
+
+.todo-nav > *,
+.todo-nav-mobile > * {
+ color: inherit;
+ opacity: 50%;
+ font-size: .5rem;
+}
+
+.todo-nav {
+ padding: 0 1rem;
+ display: flex;
+ justify-content: space-between;
+}
+
+.todo-nav-desktop{
+ display: none;
+}
+
+.todo-nav-mobile {
+ display: block;
+}
+
+@media screen and (min-width: 600px) {
+ .todo-nav-desktop {
+  display: block;
+ }
+
+ .todo-nav-mobile { 
+  display: none;
+ }
+}
+
 .active {
  text-decoration: none;
 }
@@ -37,12 +143,9 @@
  text-decoration: line-through;
 }
 
-.todo-sort-btn {
- color: black;
-}
-
 .todo-sort-btn.selected {
  color: var(--blue-bright);
+ opacity: 100%;
 }
 
 .attribution { font-size: 11px; text-align: center; }
